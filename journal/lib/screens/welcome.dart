@@ -37,8 +37,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             });} ), ),
           ),
       ),
+      body: Center(child: Icon(Icons.note)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {Navigator.pushNamed(context, '/createJournalEntry');},
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
 }
-
