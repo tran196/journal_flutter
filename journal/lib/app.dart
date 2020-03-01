@@ -35,14 +35,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  bool isDarkMode = false;
+  bool darkMode = false;
   Brightness brightness;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Easy Theme'),
+        title: const Text('Welcome'),
       ),
       body: Center(
         child: Column(
@@ -61,11 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
             child: DrawerHeader( padding: EdgeInsets.all(8.0), 
             child: SwitchListTile(
               title: Text('Dark Mode'), 
-              value: isDarkMode, 
+              value: darkMode, 
               onChanged: (bool value) { 
                 setState(() {
-                  isDarkMode = value;
                   changeBrightness();
+                  darkMode = !isDarkMode(context);
             });} ), ),
           ),
       ),
@@ -89,5 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void changeBrightness() {
     DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark? Brightness.light: Brightness.dark);
+  }
+
+  bool isDarkMode (BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {return true;}
+    else {return false;}
   }
 }
