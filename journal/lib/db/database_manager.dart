@@ -1,11 +1,15 @@
+
+import '../models/journal_entry.dart';
 import 'package:sqflite/sqflite.dart';
 import 'journal_entry_dto.dart';
+
 
 class DatabaseManager {
 
   static const String DATABASE_FILENAME = 'journal.sqlite3.db';
   static const String SQL_CREATE_SCHEMA = 'CREATE TABLE IF NOT EXISTS journal_entries(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, body TEXT NOT NULL, rating INTEGER NOT NULL, date TEXT NOT NULL);';
   static const String SQL_INSERT = 'INSERT INTO journal_entries(title, body, rating, date) VALUES(?, ?, ?, ?);';
+  static const SQL_SELECT = 'SELECT * FROM journal_entries';
 
   static DatabaseManager _instance;
 
@@ -41,6 +45,17 @@ class DatabaseManager {
     });
   }
 
+  Future <List<JournalEntry>> journalEntries() async {
+    final journalRecords = await db.rawQuery(SQL_SELECT);
+    final journalEntries = journalRecords.map( (record) {
+      return JournalEntry(
+        title: record['title'],
+        body: record['body'],
+        rating: record ['rating'],
+        dateTime: DateTime.parse(record['date']));
+    }).toList();
+    return journalEntries;
+  }
 }
 
 

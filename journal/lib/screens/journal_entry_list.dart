@@ -30,8 +30,8 @@ class _JournalEntryListScreenState extends State<JournalEntryListScreen> {
 
   void loadJournal() async {
     final databaseManager =DatabaseManager.getInstance();
-
-    List<Map> journalRecords = await database.rawQuery('SELECT * from journal_entries;');
+    List<JournalEntry> journalRecords = await databaseManager.journalEntries();
+    // List<Map> journalRecords = await databaseManager.db.rawQuery('SELECT * from journal_entries;');
     final journalEntries = journalRecords.map( (record) {
       return JournalEntry(
         title: record['title'],
@@ -60,6 +60,6 @@ class _JournalEntryListScreenState extends State<JournalEntryListScreen> {
   }
 
   void displayJournalEntryForm(BuildContext context) {
-    
+
   }
 }
