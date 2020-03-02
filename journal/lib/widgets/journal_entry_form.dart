@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../db/database_manager.dart';
+import '../db/journal_entry_dto.dart';
 
 import 'dart:async';
 
@@ -14,6 +16,8 @@ class JournalEntryFields {
   String body;
   DateTime dateTime;
   int rating;
+
+  JournalEntryFields({this.title, this.body, this.rating, this.dateTime});
   String toString() {
     return 'Title: $title, Body: $body, Time: $dateTime, Rating: $rating';
   }
@@ -30,8 +34,12 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
   final formKey = GlobalKey<FormState>();
   final journalEntryFields = JournalEntryFields();
 
+  final _titleController = TextEditingController();
+  final _bodyController = TextEditingController();
+  final _ratingController = TextEditingController();
+
   
-  // final journalEntryValues = JournalEntryDTO();
+  final journalEntryValues = JournalEntryDTO();
 
   @override
   Widget build(BuildContext context) {
@@ -57,17 +65,60 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
                 }
               },
             ), 
+            TextFormField(
+              autofocus: true ,
+              decoration: InputDecoration(labelText: 'Body', border: OutlineInputBorder()),
+              onSaved: (value){
+                //Store value in some object
+                journalEntryFields.body = value;
+              },
+              validator: (value){
+                if (value.isEmpty){
+                  return 'Please enter a body';
+                } else {
+                  return null;
+                }
+              },
+            ), 
+            TextFormField(
+              autofocus: true ,
+              decoration: InputDecoration(labelText: 'Rating', border: OutlineInputBorder()),
+              onSaved: (value){
+                //Store value in some object
+                journalEntryFields.title = value;
+              },
+              validator: (value){
+                if (value.isEmpty){
+                  return 'Please enter a Rating';
+                } else {
+                  return null;
+                }
+              },
+            ), 
             
             SizedBox(height:10),
-            RaisedButton(
-              onPressed: () {
-                if (formKey.currentState.validate()){
-                  formKey.currentState.save();
-                  // Database.of(context).saveJournalEntry(journalEntryFields);
-                  Navigator.of(context).pop();
-                }
-              
-            }, child: Text('Save Entry'),)
+            ButtonBar(
+              alignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                FlatButton(
+                  child: Text('CANCEL'),
+                  onPressed: () {
+                    _titleController.clear();
+                    _bodyController.clear();
+                    _ratingController.clear();
+                    Navigator.pop(context);
+                  },
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    if (formKey.currentState.validate()){
+                      formKey.currentState.save();
+                      // Database.(context).saveJournalEntry(journalEntryFields);
+                      Navigator.of(context).pushNamed('/journalEntry');
+                    }
+                }, child: Text('Save Entry'),),
+              ],
+            )
           ],
         ),
       ),
@@ -93,23 +144,25 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
           addDateToJournalEntryValues();
-          await deleteDatabase('journal.db');
+          final databaseManager = DatabaseManager.getInstance();
+          // await deleteDatabase('journal.db');
           // var db = await openDatabase('journal.db');
 
-          final Database database = await openDatabase(
-            'journal.db', version:1, onCreate: (Database db, int version) async {
-              await db.execute(
-                'CREATE TABLE IF NOT EXISTS journal_entries(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, body TEXT, rating INT, date DATETIME');
-            }
-          );
+          // final Database database = await openDatabase(
+          //   'journal.db', version:1, onCreate: (Database db, int version) async {
+          //     await db.execute(
+          //       'CREATE TABLE IF NOT EXISTS journal_entries(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, body TEXT NOT NULL, rating INTEGER NOT NULL, date TEXT NOT NULL);');
+          //   }
+          // );
 
-          await database.transaction((txn) async {
-            await txn.rawInsert('INSERT INTO journal_entries(title, body, rating, date) VALUES(?, ?, ?, ?)',
-            // [journalEntryValues.title, journalEntryValues.body, journalEntryValues.rating, journalEntryValues.date]
-            );
-          });
+          databaseManager.saveJournalEntry(dto: journalEntryValues);
+          // await databaseManager.db.transaction((txn) async {
+          //   await txn.rawInsert('INSERT INTO journal_entries(title, body, rating, date) VALUES(?, ?, ?, ?);',
+          //   [journalEntryFields.title, journalEntryFields.body, journalEntryFields.rating, journalEntryFields.dateTime]
+          //   );
+          // });
           // await db.close();
-          await database.close();
+          // await databaseManager.db.close();
 
           print('SAVE TO DATABASE?!');
 
@@ -120,6 +173,6 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
   }
 
   void addDateToJournalEntryValues() {
-    // journalEntryValues.dateTime = DateTime.now();
+    journalEntryFields.dateTime = DateTime.now();
   }
 }
