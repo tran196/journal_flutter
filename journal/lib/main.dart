@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'db/database_manager.dart';
 import 'app.dart';
 
 
@@ -12,5 +14,9 @@ void main() async {
       DeviceOrientation.portraitUp
   ]);
 
-  runApp(App());
+  
+  await DatabaseManager.initalize();
+
+  // runApp(App());
+  runApp(App(preferences: await SharedPreferences.getInstance()));
 }

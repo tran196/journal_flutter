@@ -34,10 +34,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               onChanged: (bool value) { 
                 setState(() {
                   isSwitched = value;
+                  changeBrightness();
             });} ), ),
           ),
       ),
-      body: Center(child: Icon(Icons.note)),
+      body: Container(child: Center(child: Icon(Icons.note, size:55.0,))),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {Navigator.pushNamed(context, '/createJournalEntry');},
         child: const Icon(Icons.add),
@@ -45,4 +47,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
+
+  void changeBrightness() {
+    DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark? Brightness.light: Brightness.dark);
+  }
+
+  bool isDarkMode (BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {return true;}
+    else {return false;}
+  }
 }

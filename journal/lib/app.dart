@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/journal_entry.dart';
 import 'screens/welcome.dart';
 import 'screens/new_entry.dart';
 
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
             '/home':(context) => MyHomePage(),
             '/createJournalEntry': (context) => JournalEntry(),
             '/welcome':(context) => WelcomeScreen(),
+            '/journalEntry':(context) => JournalEntriesScreen(),
           },
           initialRoute: '/welcome',
         );
@@ -51,13 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Journal'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-          ],
-        ),
-      ),
+      body: JournalEntriesScreen(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {Navigator.pushNamed(context, '/createJournalEntry');},
         child: const Icon(Icons.add),
