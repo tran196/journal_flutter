@@ -57,12 +57,3 @@ class DatabaseManager {
     return journalEntries;
   }
 }
-
-
-// DatabaseManager.initalize();
-// DatabaseManager.getInstance();
-
-//     if(_instance == null) {
-//       Database db = openDatabase(DATABASE_FILENAME);
-//       _instance = DatabaseManager._(database: db);
-//     }

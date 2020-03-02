@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journal/models/journal_entry.dart';
 import 'package:journal/widgets/journal_entry_form.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -30,31 +31,33 @@ class JournalEntriesScreen extends StatelessWidget {
     });
   }
 
-  final items = List<Map>.generate(10000, (i) {
-    return {
-      'title': 'Journal Entry $i',
-      'subtitle': 'Subtitle text for $i',
-    };
+  // final items = List<Map>.generate(10000, (i) {
+  //   return {
+  //     'title': 'Journal Entry $i',
+  //     'subtitle': 'Subtitle text for $i',
+  //   };
 
 
-  // final items = entries();
-
-  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar (title: Text('Journal Entries'),) ,
-      body: ListView.builder( itemBuilder: (context, index) {
-        return ListTile(
-            leading:  FlutterLogo(),
-            trailing: Icon(Icons.more_horiz),
-            // title: Text('Journal Entry ${items[index]['title']}'),
-            // subtitle: Text('Example ${items[index]['subtitle']}'),
-            // title: Text('{entries[i]['title']}'),
-            // subtitle: Text('Example ${entries[i]['subtitle']}'),
-        );
-      })
+      body: ListView.builder(itemBuilder: (context, index){
+        return ListTile(leading:  FlutterLogo());
+      },
+      itemCount: 3,
+      ),
+      // body: ListView.builder( itemBuilder: (context, index) {
+      //   return ListTile(
+      //       leading:  FlutterLogo(),
+      //       trailing: Icon(Icons.more_horiz),
+      //       // title: Text('Journal Entry ${items[index]['title']}'),
+      //       // subtitle: Text('Example ${items[index]['subtitle']}'),
+      //       // title: Text('{entries[i]['title']}'),
+      //       // subtitle: Text('Example ${entries[i]['subtitle']}'),
+      //   );
+      // })
     );
   }
 }

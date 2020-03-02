@@ -17,12 +17,11 @@ class App extends StatelessWidget {
         primarySwatch: Colors.indigo,
         brightness: brightness,
       ),
-      // loadBrightnessOnStart: true,
       themedWidgetBuilder: (BuildContext context, ThemeData theme) {
         return MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Journal',
           theme: theme,
-          home: const MyHomePage(title: 'Flutter Demo Home Page'),
+          home: const MyHomePage(title: 'Journal'),
           routes: {
             '/home':(context) => MyHomePage(),
             '/createJournalEntry': (context) => JournalEntry(),

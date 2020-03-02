@@ -108,6 +108,18 @@ class JournalEntryState extends State<JournalEntry> {
   Widget build (BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      endDrawer: Drawer(child: Container(
+            child: DrawerHeader( padding: EdgeInsets.all(8.0), 
+            child: SwitchListTile(
+              title: Text('Dark Mode'), 
+              // value: darkMode, 
+              value: isDarkMode(context),
+              onChanged: (bool value) { 
+                setState(() {
+                  changeBrightness();
+                  darkMode = !isDarkMode(context);
+            });} ), ),
+          ),),
       body: JournalEntryForm(),
 
     );
