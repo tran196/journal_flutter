@@ -106,7 +106,7 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
                     _titleController.clear();
                     _bodyController.clear();
                     _ratingController.clear();
-                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/journalEntryList');
                   },
                 ),
                 RaisedButton(

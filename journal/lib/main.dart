@@ -17,6 +17,6 @@ void main() async {
   
   await DatabaseManager.initalize();
 
-  // runApp(App());
-  runApp(App(preferences: await SharedPreferences.getInstance()));
+  runApp(App());
+  // runApp(App(preferences: await SharedPreferences.getInstance()));
 }

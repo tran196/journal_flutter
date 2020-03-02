@@ -30,7 +30,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: DrawerHeader( padding: EdgeInsets.all(8.0), 
             child: SwitchListTile(
               title: Text('Dark Mode'), 
-              value: isSwitched, 
+              value: isDarkMode(context), 
               onChanged: (bool value) { 
                 setState(() {
                   isSwitched = value;

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/journal_entry.dart';
 import 'screens/welcome.dart';
 import 'screens/new_entry.dart';
 
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:dynamic_theme/theme_switcher_widgets.dart';
+
 
 class App extends StatelessWidget {
   @override
@@ -64,7 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: DrawerHeader( padding: EdgeInsets.all(8.0), 
             child: SwitchListTile(
               title: Text('Dark Mode'), 
-              value: darkMode, 
+              // value: darkMode, 
+              value: isDarkMode(context),
               onChanged: (bool value) { 
                 setState(() {
                   changeBrightness();

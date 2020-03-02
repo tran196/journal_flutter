@@ -5,7 +5,7 @@ import 'package:sqflite/sqlite_api.dart';
 import '../db/database_manager.dart';
 
 import '../screens/journal_entry.dart';
-import '../screens/new_entry.dart';
+// import '../screens/new_entry.dart';
 
 import '../screens/welcome.dart';
 
@@ -30,16 +30,7 @@ class _JournalEntryListScreenState extends State<JournalEntryListScreen> {
 
   void loadJournal() async {
     final databaseManager =DatabaseManager.getInstance();
-    List<JournalEntry> journalRecords = await databaseManager.journalEntries();
-    // List<Map> journalRecords = await databaseManager.db.rawQuery('SELECT * from journal_entries;');
-    final journalEntries = journalRecords.map( (record) {
-      return JournalEntry(
-        title: record['title'],
-        body: record['body'],
-        rating: record ['rating'],
-        dateTime: DateTime.parse(record['date']));
-    }).toList();
-    print(journalEntries);
+    List<JournalEntry> journalEntries = await databaseManager.journalEntries();
     setState(() {
       journal = Journal(entries: journalEntries);
     });

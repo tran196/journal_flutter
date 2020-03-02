@@ -1,7 +1,7 @@
 import '../models/journal_entry.dart';
 
 class Journal {
-  List<JournalEntry> journalEntries;
+  List<JournalEntry> entries;
 
-  Journal({this.journalEntries});
+  Journal({this.entries});
 }
